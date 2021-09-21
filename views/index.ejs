@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bug Report</title>
+    <style type="text/css">
+      .btn:focus {
+        background: linear-gradient(#152b40, #152b40);
+        color: blue;
+      }
+      .button-selected {
+        border: 4px solid red;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function focusMe(button) {
+        var elem = document.getElementsByClassName("button-selected")[0];
+        // if element having class `"button-selected"` defined, do stuff
+        if (elem) {
+          elem.className = "";
+        }
+        button.className = "button-selected";
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <div class="firstDiv"></div>
+      <div class="formDiv"></div>
+      <div>
+        <h2>Feature List</h2>
+        <% features.forEach((feature) => { %>
+        <button
+          class="btn"
+          onClick="focusMe(this);"
+          required
+          value="<%= feature.dataValues.id %>"
+        >
+          <%= feature.dataValues.name %>
+        </button>
+        <% }) %>
+      </div>
+      <div class="bugList">
+        <h1>List of Bugs:</h1>
+        <button class="toggle">Toggle Sort</button>
+        <% bugs.forEach((bug) => { %>
+        <div class="bugDiv">
+          <h2>Problem: <%= bug.problem %></h2>
+          <p>Error Text:<%= bug.error_text %></p>
+          <p>Commit: <%= bug.commit %></p>
+          <p class="featureName">Feature: <%= bug.feature.name %></p>
+          <p class="dateCreated">Date: <%= bug.createdAt %></p>
+        </div>
+        <% }) %>
+      </div>
+      <div class="featureDiv"></div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
