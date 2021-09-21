@@ -63,19 +63,23 @@ export default function initUsersController(db) {
   };
   const checkCookies = async (req, res) => {
     try {
-      // if (req.cookies.loggedIn === undefined || req.cookies.loggedIn === '') {
-      //   res.send('renderLogin');
-      // }
-      const cookieQuery = await db.User.findOne({
-        where: {
-          password: req.cookies.loggedIn,
-        },
-      });
-      if (cookieQuery === null) {
+      console.log(req.cookies.loggedIn);
+      if (req.cookies.loggedIn === undefined) {
         res.send('renderLogin');
       }
       else {
-        res.send('renderBugs');
+        const cookieQuery = await db.User.findOne({
+          where: {
+            password: req.cookies.loggedIn,
+          },
+        });
+        console.log(cookieQuery);
+        if (cookieQuery === null) {
+          res.send('renderLogin');
+        }
+        else {
+          res.send('renderBugs');
+        }
       }
     }
     catch (error) {
